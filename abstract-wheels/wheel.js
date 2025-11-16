@@ -6,8 +6,15 @@ class Wheel {
     this.palette = palette;   // Color set for this wheel
     this.rings = [];          // All ring layers inside the wheel
 
-    this.rotation = random(TWO_PI);          // Initial rotation
-    this.rotationSpeed = random(-0.01, 0.01); // Slow spinning motion
+    this.rotation = 0;              // Stop at first
+    this.rotationSpeed = 0.05;      // Speed when mouse touching the wheel
+    this.currentSpeed = 0;
+    this.isHovered = false;
+  }
+
+  isMouseOver() {
+    const d = dist(mouseX, mouseY, this.x, this.y);
+    return d <= this.baseRadius * 1.5;
   }
 
   // Create multiple ring layers with random types and colors
@@ -39,7 +46,10 @@ class Wheel {
 
   // Update wheel rotation and ring animations
   update() {
-    this.rotation += this.rotationSpeed;
+    this.isHovered = this.isMouseOver();
+    const targetSpeed = this.isHovered ? this.rotationSpeed : 0;
+    this.currentSpeed = lerp(this.currentSpeed, targetSpeed, 0.1);
+    this.rotation += this.currentSpeed;
     for (let r of this.rings) r.update();
   }
 
