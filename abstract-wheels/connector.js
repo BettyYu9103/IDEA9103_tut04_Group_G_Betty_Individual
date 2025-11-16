@@ -26,9 +26,13 @@ class Connector {
     let x2 = this.endPos.x;
     let y2 = this.endPos.y;
 
+    // Frame skipping
+    const step = 0.3;
+    const pixelR = floor(this.t / step) * step;
+
     // Control point with gentle motion
-    let cx = (x1 + x2) / 2 + 30 * sin(this.t);
-    let cy = (y1 + y2) / 2 + 30 * cos(this.t);
+    let cx = (x1 + x2) / 2 + 30 * sin(pixelR);
+    let cy = (y1 + y2) / 2 + 30 * cos(pixelR);
 
     stroke(0, 90);
     strokeWeight(strokeWeight(4) + 3);

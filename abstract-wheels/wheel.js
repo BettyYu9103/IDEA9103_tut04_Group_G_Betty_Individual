@@ -30,8 +30,9 @@ class Wheel {
       currentInner = outerR;
 
       // Random ring type
+      // Most possible to be dots
       let rnd = random();
-      let type = rnd < 0.33 ? "solid" : rnd < 0.66 ? "dots" : "rays";
+      let type = rnd < 0.10 ? "solid" : rnd < 0.90 ? "dots" : "rays";
 
       // Lachlan: force last ring to be solid
       if (i === numRings - 1) type = "solid";
@@ -58,7 +59,12 @@ class Wheel {
   display() {
     push();
     translate(this.x, this.y);
-    rotate(this.rotation);
+    
+    // Frame skipping
+    const step = 0.2;
+    const pixelR = floor(this.rotation / step) * step;
+
+    rotate(pixelR);
 
     const pixelStyle = this.istouch;   // Switch of pixel mode
 

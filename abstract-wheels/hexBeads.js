@@ -234,7 +234,12 @@ class HexGrid {
       const flowY=cos(t*cell.flowSpeed+cell.flowPhase)*cell.flowAmp;
 
       const animatedPoint = (b)=>{
-        const phase = t*TWO_PI + b.u*TWO_PI*BEAD_SINE_FREQ;
+
+        // Frame skipping
+        const step = 0.2;
+        const pixelR = floor(t / step) * step;
+
+        const phase = pixelR*TWO_PI + b.u*TWO_PI*BEAD_SINE_FREQ;
         const taper = sin(b.u*PI);
 
         const offN = sin(phase)     * b.nAmp * taper;

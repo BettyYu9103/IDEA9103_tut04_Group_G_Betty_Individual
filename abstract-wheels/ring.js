@@ -27,6 +27,8 @@ class Ring {
   // Thick outline ring
   drawSolid() {
     
+  push();
+
   // Herman: convert solid ring into dashed ring style
   // Set dashed stroke pattern
   drawingContext.setLineDash([8, 6]);  // [dashLength, gapLength]
@@ -35,11 +37,15 @@ class Ring {
   strokeWeight(this.outerR - this.innerR);
   noFill();
 
-  let r = this.innerR + this.outerR;
-  ellipse(0, 0, r * 2, r * 2);
+  rectMode(CORNER);     // Change the mode to corner only in drawSolid
+
+  let r = (this.innerR + this.outerR) * 0.75;
+  rect(-r, -r, r*2, r*2);                       // Change the shape to square
 
   // Reset dash so it won't affect other drawings
   drawingContext.setLineDash([]);
+
+  pop();
 }
 
    // Circular ring of animated dots
@@ -47,7 +53,7 @@ class Ring {
     noStroke();
     fill(this.colorMain);
 
-    let numDots = 36;
+    let numDots = 26;
     let r = (this.innerR + this.outerR) / 2;
 
     for (let i = 0; i < numDots; i++) {
@@ -72,7 +78,7 @@ class Ring {
   // Radial line pattern
   drawRays() {
     stroke(this.colorMain);
-    strokeWeight(2);
+    strokeWeight(3);
     noFill();
 
     let numRays = 40;
