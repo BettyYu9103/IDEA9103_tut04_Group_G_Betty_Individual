@@ -269,16 +269,26 @@ class HexGrid {
 
           const wig = sin(t*1.9 + b.u*4.1) * (strokeW*0.07);
 
+          // Whether the mouse is touching or not
+          const touch = dist(mouseX, mouseY, P.x, P.y) < strokeW * 0.7;
+
           push();
           translate(P.x,P.y);
           rotate(b.angle);
           noStroke();
 
-          fill(b.strokeCol);
-          ellipse(wig, 0, strokeW, strokeH);
-
-          fill(b.fillCol);
-          ellipse(0, 0, fillW, fillH);
+          if (touch) {
+            rectMode(CENTER);
+            fill(b.strokeCol);
+            rect(wig, 0, strokeW, strokeH);
+            fill(b.fillCol);
+            rect(0, 0, fillW, fillH);
+          } else {
+            fill(b.strokeCol);
+            ellipse(wig, 0, strokeW, strokeH);
+            fill(b.fillCol);
+            ellipse(0, 0, fillW, fillH);
+          }
 
           pop();
         }
@@ -318,19 +328,30 @@ class HexGrid {
         const wigX = sin(t*0.9 + b.u*7.3) * (strokeW*0.06);
         const wigY = cos(t*1.0 + b.u*5.4) * (strokeH*0.06);
 
+        // Whether the mouse is touching or not
+        const touch = dist(mouseX, mouseY, P.x, P.y) < strokeW * 0.7;
+
         push();
         translate(P.x,P.y);
         rotate(b.angle);
         noStroke();
 
-        fill(b.strokeCol);
-        ellipse(wigX, wigY, strokeW, strokeH);
-
-        fill(b.coreCol);
-        ellipse(0, 0, coreD, coreD);
-
-        fill(255);
-        ellipse(dotX, dotY, dotW, dotH);
+        if (touch) {
+          rectMode(CENTER);
+          fill(b.strokeCol);
+          rect(wigX, wigY, strokeW, strokeH);
+          fill(b.coreCol);
+          rect(0, 0, coreD, coreD);
+          fill(255);
+          rect(dotX, dotY, dotW, dotH);
+        } else {
+          fill(b.strokeCol);
+          ellipse(wigX, wigY, strokeW, strokeH);
+          fill(b.coreCol);
+          ellipse(0, 0, coreD, coreD);
+          fill(255);
+          ellipse(dotX, dotY, dotW, dotH);
+        }
 
         pop();
       }
@@ -375,22 +396,35 @@ class HexGrid {
     
       const wobX = sin((t*0.7)*2 + cb.pulsePhase*1.7) * (strokeW*0.05);
       const wobY = cos((t*0.8)*2 + cb.pulsePhase*1.2) * (strokeH*0.05);
+
+      // Whether the mouse is touching or not
+      const touch = dist(mouseX, mouseY, px, py) < strokeW * 0.7;
     
       push();
       translate(px,py);
       rotate(cb.angle);
       noStroke();
     
-      fill(cb.strokeCol);
-      ellipse(cb.strokeBGOffX + wobX,
-              cb.strokeBGOffY + wobY,
-              strokeW, strokeH);
-      
-      fill(cb.coreCol);
-      ellipse(0,0,coreD,coreD);
-      
-      fill(255);
-      ellipse(dotX, dotY, dotW, dotH);
+      if (touch) {
+        rectMode(CENTER);
+        fill(cb.strokeCol);
+        rect(cb.strokeBGOffX + wobX,
+             cb.strokeBGOffY + wobY,
+             strokeW, strokeH);
+        fill(cb.coreCol);
+        rect(0, 0, coreD, coreD);
+        fill(255);
+        rect(dotX, dotY, dotW, dotH);
+      } else {
+        fill(cb.strokeCol);
+        ellipse(cb.strokeBGOffX + wobX,
+                cb.strokeBGOffY + wobY,
+                strokeW, strokeH);
+        fill(cb.coreCol);
+        ellipse(0,0,coreD,coreD);
+        fill(255);
+        ellipse(dotX, dotY, dotW, dotH);
+      }
       
       pop();
     }

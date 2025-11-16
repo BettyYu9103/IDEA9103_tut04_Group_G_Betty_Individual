@@ -9,10 +9,10 @@ class Wheel {
     this.rotation = 0;              // Stop at first
     this.rotationSpeed = 0.01;      // Speed when mouse touching the wheel
     this.currentSpeed = 0;
-    this.isHovered = false;         // Wether the mouse is on the wheel or not
+    this.istouch = false;         // Whether the mouse is on the wheel or not
   }
 
-  // Wether the mouse is on the wheel or not
+  // Whether the mouse is on the wheel or not
   isMouseOver() {
     const d = dist(mouseX, mouseY, this.x, this.y);
     return d <= this.baseRadius * 1.5;
@@ -47,8 +47,8 @@ class Wheel {
 
   // Update wheel rotation and ring animations
   update() {
-    this.isHovered = this.isMouseOver();
-    const targetSpeed = this.isHovered ? this.rotationSpeed : 0;
+    this.istouch = this.isMouseOver();
+    const targetSpeed = this.istouch ? this.rotationSpeed : 0;
     this.currentSpeed = lerp(this.currentSpeed, targetSpeed, 0.1);
     this.rotation += this.currentSpeed;
     for (let r of this.rings) r.update();
@@ -60,7 +60,7 @@ class Wheel {
     translate(this.x, this.y);
     rotate(this.rotation);
 
-    const pixelStyle = this.isHovered;   // Switch of pixel mode
+    const pixelStyle = this.istouch;   // Switch of pixel mode
 
     // Large soft background discs to increase visual density
     noStroke();
