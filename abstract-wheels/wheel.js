@@ -7,11 +7,12 @@ class Wheel {
     this.rings = [];          // All ring layers inside the wheel
 
     this.rotation = 0;              // Stop at first
-    this.rotationSpeed = 0.05;      // Speed when mouse touching the wheel
+    this.rotationSpeed = 0.01;      // Speed when mouse touching the wheel
     this.currentSpeed = 0;
-    this.isHovered = false;
+    this.isHovered = false;         // Wether the mouse is on the wheel or not
   }
 
+  // Wether the mouse is on the wheel or not
   isMouseOver() {
     const d = dist(mouseX, mouseY, this.x, this.y);
     return d <= this.baseRadius * 1.5;
@@ -59,6 +60,8 @@ class Wheel {
     translate(this.x, this.y);
     rotate(this.rotation);
 
+    const pixelStyle = this.isHovered;   // Switch of pixel mode
+
     // Large soft background discs to increase visual density
     noStroke();
     fill(0, 35);
@@ -80,8 +83,7 @@ class Wheel {
     fill(coreColor);
     ellipse(0, 0, this.baseRadius * 0.6, this.baseRadius * 0.6);
 
-    // Draw all rings
-    for (let r of this.rings) r.display();
+    for (let r of this.rings) r.display(pixelStyle);            // Send the information back to rings
 
     // Herman:
     // add a subtle outer outline around the main wheel area
@@ -93,8 +95,9 @@ class Wheel {
     drawingContext.setLineDash([6, 6]);  // dash length, gap length
     ellipse(0, 0, this.baseRadius * 2.0, this.baseRadius * 2.0);
 
-   // Reset line dash so it does not affect other drawings
-   drawingContext.setLineDash([]);
+    // Reset line dash so it does not affect other drawings
+    drawingContext.setLineDash([]);
+
     pop();
   }
 }

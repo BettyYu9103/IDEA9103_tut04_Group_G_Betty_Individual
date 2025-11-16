@@ -14,11 +14,11 @@ class Ring {
   }
 
   // Render ring based on its type
-  display() {
+  display(pixelStyle = false) {
     if (this.type === "solid") {
       this.drawSolid();
     } else if (this.type === "dots") {
-      this.drawDots();
+      this.drawDots(pixelStyle);
     } else if (this.type === "rays") {
       this.drawRays();
     }
@@ -43,7 +43,7 @@ class Ring {
 }
 
    // Circular ring of animated dots
-  drawDots() {
+  drawDots(pixelStyle = false) {
     noStroke();
     fill(this.colorMain);
 
@@ -57,7 +57,14 @@ class Ring {
 
       // Noise adds organic fluctuation
       let d = map(noise(this.noiseOffset + i * 0.1), 0, 1, 4, 8);
+      
+      // Difference of spuare and circle
+      if (pixelStyle) {
+      rectMode(CENTER);
+      rect(x, y, d, d);
+      } else {
       ellipse(x, y, d, d);
+      }
     }
   }
 
